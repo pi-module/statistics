@@ -113,7 +113,7 @@ class ExampleController extends ActionController
                     'statisticsAction'   => $statisticsAction,
                 ], $message);
             } else {
-                $end = $start + (86400 * 365);
+                $end = $start + (86400 * 200);
 
                 if ($end > strtotime(date('Y-m-d', strtotime("-1 days")) . '23:59:59')) {
                     $message = __('All statistics synced yet, please try sync option tomorrow.');
@@ -142,7 +142,7 @@ class ExampleController extends ActionController
                     'controller'         => 'example',
                     'action'             => 'sync',
                     'confirm'            => 1,
-                    'start'              => strtotime($start) + (86400 * 365),
+                    'start'              => strtotime($start) + (86400 * 200),
                     'statisticsEntity'   => $statisticsEntity,
                     'statisticsEntityId' => $statisticsEntityId,
                     'statisticsModule'   => $statisticsModule,
