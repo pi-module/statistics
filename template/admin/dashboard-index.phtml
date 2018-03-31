@@ -1,0 +1,17 @@
+<?php $this->css($this->assetModule('css/admin.css')); ?>
+<div class='clearfix'>
+    <div class="page-header">
+        <h3><?php _e('Hourly statistics'); ?></h3>
+    </div>
+    <?php echo $this->chart('line', $data['hourly']); ?>
+
+    <div class="page-header">
+        <h3><?php _e('Daily statistics'); ?></h3>
+    </div>
+    <?php echo $this->chart('line', $data['daily']); ?>
+
+    <div class="page-header">
+        <h3><?php _e('Monthly statistics'); ?></h3>
+    </div>
+    <?php echo $this->chart('line', $data['monthly']); ?>
+</div>

@@ -1,0 +1,34 @@
+<?php $this->css($this->assetModule('css/admin.css')); ?>
+<div class='clearfix'>
+    <div class="alert alert-info" role="alert">
+        <?php _e('Here is sample code and result for single page item for guide module. you can use this code on other modules and for each video / news / event / product and ... build statistics page, you can build statistics page for module too'); ?>
+    </div>
+    <div class="alert alert-success" role="alert">
+        <div class="row">
+            <div class="col-md-10">
+                <?php _e('You can try sync this item information'); ?>
+            </div>
+            <div class="col-md-2 text-right">
+                <a class="btn btn-success" href="<?php echo $this->escape($url); ?>" role="button">
+                    <i class="fa fa-refresh"></i>
+                    <?php _e('Start sync'); ?>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h3><?php _e('Hourly statistics'); ?></h3>
+    </div>
+    <?php // echo $this->chart('line', $data['hourly']); ?>
+
+    <div class="page-header">
+        <h3><?php _e('Daily statistics'); ?></h3>
+    </div>
+    <?php echo $this->chart('line', $data['daily']); ?>
+
+    <div class="page-header">
+        <h3><?php _e('Monthly statistics'); ?></h3>
+    </div>
+    <?php echo $this->chart('line', $data['monthly']); ?>
+</div>
