@@ -24,7 +24,7 @@ class ExampleController extends ActionController
         $statisticsEntity   = $this->params('statisticsEntity', 'item');
         $statisticsEntityId = $this->params('statisticsEntityId', 1);
         $statisticsModule   = $this->params('statisticsModule', 'guide');
-        $statisticsAction   = $this->params('statisticsModule', 'hits');
+        $statisticsAction   = $this->params('statisticsAction', 'hits');
 
         // Set date
         $data = [];
@@ -103,13 +103,29 @@ class ExampleController extends ActionController
             // Check start time and do sync
             if (!$start) {
                 $message = __('All statistics synced yet, please try sync option tomorrow.');
-                return $this->jump(['action' => 'index'], $message);
+                return $this->jump([
+                    'controller'         => 'example',
+                    'action'             => 'sync',
+                    'confirm'            => 1,
+                    'statisticsEntity'   => $statisticsEntity,
+                    'statisticsEntityId' => $statisticsEntityId + 1,
+                    'statisticsModule'   => $statisticsModule,
+                    'statisticsAction'   => $statisticsAction,
+                ], $message);
             } else {
-                $end = $start + (86400 * 30);
+                $end = $start + (86400 * 365);
 
                 if ($end > strtotime(date('Y-m-d', strtotime("-1 days")) . '23:59:59')) {
                     $message = __('All statistics synced yet, please try sync option tomorrow.');
-                    $this->jump(['action' => 'index'], $message);
+                    $this->jump([
+                        'controller'         => 'example',
+                        'action'             => 'sync',
+                        'confirm'            => 1,
+                        'statisticsEntity'   => $statisticsEntity,
+                        'statisticsEntityId' => $statisticsEntityId + 1,
+                        'statisticsModule'   => $statisticsModule,
+                        'statisticsAction'   => $statisticsAction,
+                    ], $message);
                 }
 
                 // Set start and end
@@ -126,7 +142,7 @@ class ExampleController extends ActionController
                     'controller'         => 'example',
                     'action'             => 'sync',
                     'confirm'            => 1,
-                    'start'              => strtotime($start) + (86400 * 30),
+                    'start'              => strtotime($start) + (86400 * 365),
                     'statisticsEntity'   => $statisticsEntity,
                     'statisticsEntityId' => $statisticsEntityId,
                     'statisticsModule'   => $statisticsModule,
