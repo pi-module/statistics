@@ -105,7 +105,7 @@ class ExampleController extends ActionController
                 $message = __('All statistics synced yet, please try sync option tomorrow.');
                 return $this->jump(['action' => 'index'], $message);
             } else {
-                $end = $start + 86400;
+                $end = $start + (86400 * 30);
 
                 if ($end > strtotime(date('Y-m-d', strtotime("-1 days")) . '23:59:59')) {
                     $message = __('All statistics synced yet, please try sync option tomorrow.');
@@ -126,7 +126,7 @@ class ExampleController extends ActionController
                     'controller'         => 'example',
                     'action'             => 'sync',
                     'confirm'            => 1,
-                    'start'              => strtotime($start) + 86400,
+                    'start'              => strtotime($start) + (86400 * 30),
                     'statisticsEntity'   => $statisticsEntity,
                     'statisticsEntityId' => $statisticsEntityId,
                     'statisticsModule'   => $statisticsModule,
