@@ -32,7 +32,7 @@ class Log extends AbstractApi
         $log->section     = isset($options['section']) ? $options['section'] : 'front';
         $log->time_create = isset($options['time']) ? $options['time'] : time();
         $log->ip          = isset($options['ip']) ? $options['ip'] : Pi::user()->getIp();
-        $log->uip         = isset($options['uid']) ? $options['uid'] : Pi::user()->getId();
+        $log->uid         = isset($options['uid']) ? $options['uid'] : Pi::user()->getId();
         $log->save();
     }
 }
