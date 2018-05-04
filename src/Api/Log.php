@@ -33,6 +33,7 @@ class Log extends AbstractApi
         $log->time_create = isset($options['time']) ? $options['time'] : time();
         $log->ip          = isset($options['ip']) ? $options['ip'] : Pi::user()->getIp();
         $log->uid         = isset($options['uid']) ? $options['uid'] : Pi::user()->getId();
+        $log->session     = isset($options['session']) ? $options['session'] : Pi::service('session')->getId();
         $log->save();
     }
 }
