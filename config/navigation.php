@@ -22,13 +22,13 @@ return [
             'controller' => 'dashboard',
             'action'     => 'index',
         ],
-        'sync'      => [
-            'label'      => _a('Sync'),
+        'detail' => [
+            'label'      => _a('Detail'),
             'permission' => [
-                'resource' => 'sync',
+                'resource' => 'detail',
             ],
             'route'      => 'admin',
-            'controller' => 'sync',
+            'controller' => 'detail',
             'action'     => 'index',
         ],
         'log'       => [
@@ -38,15 +38,6 @@ return [
             ],
             'route'      => 'admin',
             'controller' => 'log',
-            'action'     => 'index',
-        ],
-        'example'     => [
-            'label'      => _a('Example'),
-            'permission' => [
-                'resource' => 'example',
-            ],
-            'route'      => 'admin',
-            'controller' => 'example',
             'action'     => 'index',
         ],
     ],

@@ -17,16 +17,12 @@ return [
             'title'  => _a('Dashboard'),
             'access' => [],
         ],
-        'sync'      => [
-            'title'  => _a('Sync'),
+        'detail' => [
+            'title'  => _a('Detail'),
             'access' => [],
         ],
         'log'       => [
             'title'  => _a('Log'),
-            'access' => [],
-        ],
-        'example'     => [
-            'title'  => _a('Example'),
             'access' => [],
         ],
     ],

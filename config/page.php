@@ -19,19 +19,14 @@ return [
             'permission' => 'dashboard',
         ],
         [
-            'title'      => _a('Sync'),
-            'controller' => 'sync',
-            'permission' => 'sync',
+            'title'      => _a('Detail'),
+            'controller' => 'detail',
+            'permission' => 'detail',
         ],
         [
             'label'      => _a('Log'),
             'controller' => 'log',
             'permission' => 'log',
-        ],
-        [
-            'title'      => _a('Example'),
-            'controller' => 'example',
-            'permission' => 'example',
         ],
     ],
 ];

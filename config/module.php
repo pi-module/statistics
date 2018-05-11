@@ -15,7 +15,7 @@ return [
     'meta'       => [
         'title'       => _a('Statistics'),
         'description' => _a('Statistics system for pi, save all actions from all modules'),
-        'version'     => '0.0.5',
+        'version'     => '0.0.7',
         'license'     => 'New BSD',
         'logo'        => 'image/logo.png',
         'readme'      => 'docs/readme.txt',

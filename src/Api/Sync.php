@@ -22,7 +22,7 @@ use Zend\Db\Sql\Expression;
 
 /**
  * Pi::api('sync', 'statistics')->total($type, $start, $end);
- * Pi::api('sync', 'statistics')->entity($module, $action, $entity, $entityId, $type, $start, $end);
+ * Pi::api('sync', 'statistics')->entity($module, $entity, $entityId, $action, $type, $start, $end);
  * Pi::api('sync', 'statistics')->lastUpdate();
  * Pi::api('sync', 'statistics')->lastUpdateEntity($module, $action, $entity, $entityId);
  */
@@ -152,7 +152,7 @@ class Sync extends AbstractApi
         }
     }
 
-    public function entity($module, $action, $entity, $entityId, $type = 'daily', $start = '', $end = '')
+    public function entity($module, $entity, $entityId, $action, $type = 'daily', $start = '', $end = '')
     {
         // Set date
         $start = $start ? $start : Pi::api('sync', 'statistics')->lastUpdate();
@@ -173,54 +173,6 @@ class Sync extends AbstractApi
 
         // Set type
         switch ($type) {
-            /* case 'hourly':
-                foreach ($timeArray as $year => $yearValue) {
-                    foreach ($yearValue as $month => $monthValue) {
-                        foreach ($monthValue as $day => $dayValue) {
-                            for ($hour = 0; $hour <= 24; $hour++) {
-                                // Get count
-                                $timeStart = strtotime(sprintf('%s-%s-%s %s:00:00', $year, $month, $day, $hour));
-                                $timeEnd   = strtotime(sprintf('%s-%s-%s %s:59:59', $year, $month, $day, $hour));
-                                $where     = [
-                                    'time_create >= ?' => $timeStart,
-                                    'time_create <= ?' => $timeEnd,
-                                    'module'           => $module,
-                                    'entity'           => $entity,
-                                    'entity_id'        => $entityId,
-                                    'action'           => $action,
-                                ];
-                                $select    = Pi::model('log', 'statistics')->select()->columns($columns)->where($where);
-                                $count     = Pi::model('log', 'statistics')->selectWith($select)->current()->count;
-
-                                // find and save count
-                                $where  = [
-                                    'date'      => sprintf('%s-%s-%s', $year, $month, $day),
-                                    'hour'      => $hour,
-                                    'module'    => $module,
-                                    'entity'    => $entity,
-                                    'entity_id' => $entityId,
-                                    'action'    => $action,
-                                ];
-                                $select = Pi::model('module_hourly', 'statistics')->select()->where($where);
-                                $total  = Pi::model('module_hourly', 'statistics')->selectWith($select)->current();
-                                if (!$total) {
-                                    $total       = Pi::model('module_hourly', 'statistics')->createRow();
-                                    $total->date = sprintf('%s-%s-%s', $year, $month, $day);
-                                    $total->hour = $hour;
-                                }
-                                $total->module      = $module;
-                                $total->entity      = $entity;
-                                $total->entity_id   = $entityId;
-                                $total->action      = $action;
-                                $total->total_count = $count;
-                                $total->save();
-                            }
-                        }
-                    }
-                }
-
-                break; */
-
             case 'daily':
                 foreach ($timeArray as $year => $yearValue) {
                     foreach ($yearValue as $month => $monthValue) {
@@ -233,20 +185,30 @@ class Sync extends AbstractApi
                                 'time_create <= ?' => $timeEnd,
                                 'module'           => $module,
                                 'entity'           => $entity,
-                                'entity_id'        => $entityId,
-                                'action'           => $action,
                             ];
-                            $select    = Pi::model('log', 'statistics')->select()->columns($columns)->where($where);
-                            $count     = Pi::model('log', 'statistics')->selectWith($select)->current()->count;
+                            if ($entityId) {
+                                $where['entity_id'] = $entityId;
+                            }
+                            if ($action) {
+                                $where['action'] = $action;
+                            }
+
+                            $select = Pi::model('log', 'statistics')->select()->columns($columns)->where($where);
+                            $count  = Pi::model('log', 'statistics')->selectWith($select)->current()->count;
 
                             // find and save count
-                            $where  = [
-                                'date'      => sprintf('%s-%s-%s', $year, $month, $day),
-                                'module'    => $module,
-                                'entity'    => $entity,
-                                'entity_id' => $entityId,
-                                'action'    => $action,
+                            $where = [
+                                'date'   => sprintf('%s-%s-%s', $year, $month, $day),
+                                'module' => $module,
+                                'entity' => $entity,
                             ];
+                            if ($entityId) {
+                                $where['entity_id'] = $entityId;
+                            }
+                            if ($action) {
+                                $where['action'] = $action;
+                            }
+
                             $select = Pi::model('module_daily', 'statistics')->select()->where($where);
                             $total  = Pi::model('module_daily', 'statistics')->selectWith($select)->current();
                             if (!$total) {
@@ -255,8 +217,8 @@ class Sync extends AbstractApi
                             }
                             $total->module      = $module;
                             $total->entity      = $entity;
-                            $total->entity_id   = $entityId;
-                            $total->action      = $action;
+                            $total->entity_id   = $entityId ? $entityId : 0;
+                            $total->action      = $action ? $action : 'hits';
                             $total->total_count = $count;
                             $total->save();
                         }
@@ -281,20 +243,30 @@ class Sync extends AbstractApi
                             'time_create <= ?' => $timeEnd,
                             'module'           => $module,
                             'entity'           => $entity,
-                            'entity_id'        => $entityId,
-                            'action'           => $action,
                         ];
-                        $select      = Pi::model('log', 'statistics')->select()->columns($columns)->where($where);
-                        $count       = Pi::model('log', 'statistics')->selectWith($select)->current()->count;
+                        if ($entityId) {
+                            $where['entity_id'] = $entityId;
+                        }
+                        if ($action) {
+                            $where['action'] = $action;
+                        }
+
+                        $select = Pi::model('log', 'statistics')->select()->columns($columns)->where($where);
+                        $count  = Pi::model('log', 'statistics')->selectWith($select)->current()->count;
 
                         // find and save count
-                        $where  = [
-                            'date'      => sprintf('%s-%s-1', $year, $month),
-                            'module'    => $module,
-                            'entity'    => $entity,
-                            'entity_id' => $entityId,
-                            'action'    => $action,
+                        $where = [
+                            'date'   => sprintf('%s-%s-1', $year, $month),
+                            'module' => $module,
+                            'entity' => $entity,
                         ];
+                        if ($entityId) {
+                            $where['entity_id'] = $entityId;
+                        }
+                        if ($action) {
+                            $where['action'] = $action;
+                        }
+
                         $select = Pi::model('module_monthly', 'statistics')->select()->where($where);
                         $total  = Pi::model('module_monthly', 'statistics')->selectWith($select)->current();
                         if (!$total) {
@@ -303,8 +275,8 @@ class Sync extends AbstractApi
                         }
                         $total->module      = $module;
                         $total->entity      = $entity;
-                        $total->entity_id   = $entityId;
-                        $total->action      = $action;
+                        $total->entity_id   = $entityId ? $entityId : 0;
+                        $total->action      = $action ? $action : 'hits';
                         $total->total_count = $count;
                         $total->save();
                     }
@@ -339,14 +311,19 @@ class Sync extends AbstractApi
         return $lastUpdate;
     }
 
-    public function lastUpdateEntity($module, $action, $entity, $entityId)
+    public function lastUpdateEntity($module, $entity, $entityId, $action)
     {
         $where  = [
             'module'    => $module,
-            'action'    => $action,
             'entity'    => $entity,
-            'entity_id' => $entityId,
+
         ];
+        if ($entityId) {
+            $where['entity_id'] = $entityId;
+        }
+        if ($action) {
+            $where['action'] = $action;
+        }
         $order  = ['date DESC'];
         $limit  = 1;
         $select = Pi::model('module_daily', 'statistics')->select()->where($where)->order($order)->limit($limit);

@@ -1,10 +1,9 @@
 <?php $this->css($this->assetModule('css/admin.css')); ?>
 <div class='clearfix'>
-
     <div class="alert alert-success" role="alert">
         <div class="row">
             <div class="col-md-10">
-                <?php _e('You can sync website visit actions here, all syncs finished to yesterday and your synced data have one day delay'); ?>
+                <?php _e('You can try sync this item information'); ?>
             </div>
             <div class="col-md-2 text-right">
                 <a class="btn btn-success" href="<?php echo $this->escape($url); ?>" role="button">
@@ -14,16 +13,10 @@
             </div>
         </div>
     </div>
-
     <div class='clearfix'>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-                <a href="#hourly" aria-controls="hourly" role="tab" data-toggle="tab">
-                    <?php _e('Hourly statistics'); ?>
-                </a>
-            </li>
-            <li role="presentation">
                 <a href="#daily" aria-controls="daily" role="tab" data-toggle="tab">
                     <?php _e('Daily statistics'); ?>
                 </a>
@@ -36,10 +29,7 @@
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="hourly">
-                <?php echo $this->chart('line', $data['hourly']); ?>
-            </div>
-            <div role="tabpanel" class="tab-pane" id="daily">
+            <div role="tabpanel" class="tab-pane active" id="daily">
                 <?php echo $this->chart('line', $data['daily']); ?>
             </div>
             <div role="tabpanel" class="tab-pane" id="monthly">
