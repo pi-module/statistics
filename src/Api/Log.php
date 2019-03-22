@@ -23,6 +23,10 @@ class Log extends AbstractApi
 {
     public function save($module, $entity, $entityId = 0, $options = [])
     {
+        // Get config
+        $config = Pi::service('registry')->config->read($this->getModule());
+
+        // Save log on MySql
         $log              = Pi::model('log', 'statistics')->createRow();
         $log->module      = $module;
         $log->entity      = $entity;
@@ -35,5 +39,23 @@ class Log extends AbstractApi
         $log->uid         = isset($options['uid']) ? $options['uid'] : Pi::user()->getId();
         $log->session     = isset($options['session']) ? $options['session'] : Pi::service('session')->getId();
         $log->save();
+
+        // Check and save log on ArangoDB
+        if ($config['arangodb']) {
+            $params = [
+                'module'      => $module,
+                'entity'      => $entity,
+                'entity_id'   => $entityId,
+                'action'      => isset($options['action']) ? $options['action'] : 'hits',
+                'source'      => isset($options['source']) ? $options['source'] : 'web',
+                'section'     => isset($options['section']) ? $options['section'] : 'front',
+                'time_create' => isset($options['time']) ? $options['time'] : time(),
+                'date_create' => isset($options['time']) ? date('Y-m-d H:i:s', $options['time']) : date('Y-m-d H:i:s'),
+                'ip'          => isset($options['ip']) ? $options['ip'] : Pi::user()->getIp(),
+                'uid '        => isset($options['uid']) ? $options['uid'] : Pi::user()->getId(),
+                'session'     => isset($options['session']) ? $options['session'] : Pi::service('session')->getId(),
+            ];
+            return Pi::service('arangoDb')->insert($params, 'statistics');
+        }
     }
 }
