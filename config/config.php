@@ -8,13 +8,29 @@
  */
 
 return [
-    'item' => [
-        'arangodb' => [
-            'title'       => _a('Save logs on arangodb'),
-            'description' => '',
-            'edit'        => 'checkbox',
-            'filter'      => 'number_int',
-            'value'       => 0,
+    'category' => [
+        [
+            'title' => _a('Log'),
+            'name'  => 'log',
+        ],
+    ],
+    'item'     => [
+        'storage' => [
+            'title'       => _a('Log storage engine'),
+            'description' => ' ',
+            'edit'        => [
+                'type'    => 'select',
+                'options' => [
+                    'options' => [
+                        'mysql'    => _a('MySQL'),
+                        'mongodb'  => _a('MongoDb ( and  MySQL )'),
+                        'arangodb' => _a('ArangoDb ( and  MySQL )'),
+                    ],
+                ],
+            ],
+            'filter'      => 'string',
+            'value'       => 'news',
+            'category'    => 'log',
         ],
     ],
 ];

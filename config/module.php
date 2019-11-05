@@ -15,12 +15,12 @@ return [
     'meta'       => [
         'title'       => _a('Statistics'),
         'description' => _a('Statistics system for pi, save all actions from all modules'),
-        'version'     => '0.0.8',
+        'version'     => '0.0.9',
         'license'     => 'New BSD',
         'logo'        => 'image/logo.png',
         'readme'      => 'docs/readme.txt',
         'demo'        => 'http://piengine.org',
-        'icon'        => 'fa-area-chart',
+        'icon'        => 'fa-chart-area',
     ],
     // Author information
     'author'     => [

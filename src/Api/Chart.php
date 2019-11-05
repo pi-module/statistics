@@ -37,7 +37,7 @@ class Chart extends AbstractApi
                 $table = [
                     'monthly' => 'module_monthly',
                     'daily'   => 'module_daily',
-                    'hourly'  => 'module_hourly',
+                    //'hourly'  => 'module_hourly',
                 ];
                 break;
         }

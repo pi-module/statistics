@@ -37,7 +37,7 @@ class Sync extends AbstractApi
         // Set time list
         $timeArray = [];
         $start     = new DateTime($start);
-        $end       = (new DateTime($end));
+        $end       = new DateTime($end);
         $interval  = new DateInterval('P1D');
         $period    = new DatePeriod($start, $interval, $end);
         foreach ($period as $dt) {
