@@ -18,7 +18,7 @@ use DatePeriod;
 use DateTime;
 use Pi;
 use Pi\Application\Api\AbstractApi;
-use Zend\Db\Sql\Expression;
+use Laminas\Db\Sql\Expression;
 
 /**
  * Pi::api('sync', 'statistics')->total($type, $start, $end);
